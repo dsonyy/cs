@@ -1,2 +1,1 @@
-# asd
-Algorithms and data structures.
+# Algorytmy i Struktury Danych
