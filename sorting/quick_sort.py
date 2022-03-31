@@ -15,18 +15,3 @@ def _quick_sort(T, l, r):
 
 def quick_sort(T):
     _quick_sort(T, 0, len(T) - 1)
-
-
-def quick_sort2(T):
-    pivot = T[-1]
-    left = [v for v in T if v <= pivot]
-    right = [v for v in T if v > pivot]
-
-    i = 0
-    for v in left:
-        T[i] = v
-        i += 1
-    T[i] = pivot
-    for v in right:
-        T[i] = v
-        i += 1
