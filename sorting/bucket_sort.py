@@ -3,11 +3,11 @@ from random import uniform, randrange
 
 
 def bucket_sort(T, a, b):
-    n = b - a + 1
-    buckets = [[] for _ in range(n)]
+    width = (b - a + 1) / len(T)
+    buckets = [[] for _ in range(len(T))]
 
     for v in T:
-        idx = int(v) - a
+        idx = int((v - a) // width)
         buckets[idx].append(v)
 
     i = 0
