@@ -1,3 +1,4 @@
+from copy import deepcopy
 import traceback
 from termcolor import cprint
 from typing import Callable, List, Any
@@ -13,7 +14,7 @@ def test(fn: Callable[..., bool],
          test_name: str) -> bool:
     global test_group
     test_group += 1
-    cprint(f"{test_name} {test_group}", color="cyan")
+    cprint(f"{test_group}. {test_name}", color="cyan")
 
     if len(inputs) != len(outputs):
         cprint("Length of inputs and outputs are not the same.", color="red")
@@ -23,11 +24,12 @@ def test(fn: Callable[..., bool],
     ok = True
     elapsed_all = 0
     for i in range(n):
+        input = deepcopy(inputs[0])
         start = time.time()
         try:
-            result = fn(*inputs[i])
+            result = fn(*input)
         except Exception as e:
-            cprint("TEST {test_group}.{i} EXCEPTION", color="red")
+            cprint(f"TEST {test_group}.{i} EXCEPTION", color="red")
             traceback.print_exc()
             ok = False
             continue
@@ -35,11 +37,11 @@ def test(fn: Callable[..., bool],
         elapsed_all += elapsed
 
         if result != outputs[i]:
-            cprint("TEST {test_group}.{i} BAD RESULT", color="red")
+            cprint(f"TEST {test_group}.{i} BAD RESULT", color="red")
             # cprint(f"\tInput:  {inputs[i]}")
             # cprint(f"\tOutput: {outputs[i]}")
-            cprint(f"\tResult: {result}")
+            # cprint(f"\tResult: {result}")
             ok = False
     if ok:
-        cprint(f"OK {elapsed_all:0.3f}s", "green")
+        cprint(f"   OK {elapsed_all:0.3f}s", "green")
     return ok
