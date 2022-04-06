@@ -7,3 +7,4 @@ def insertion_sort(T):
             T[j] = T[j - 1]
             j -= 1
         T[j] = v
+    return T

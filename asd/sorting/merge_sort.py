@@ -33,3 +33,4 @@ def _merge_sort(T, l, r):
 
 def merge_sort(T):
     _merge_sort(T, 0, len(T) - 1)
+    return T

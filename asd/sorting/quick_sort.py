@@ -15,3 +15,4 @@ def _quick_sort(T, l, r):
 
 def quick_sort(T):
     _quick_sort(T, 0, len(T) - 1)
+    return T

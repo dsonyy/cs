@@ -23,3 +23,4 @@ def radix_sort(T):
     digits = int(log(max(T), base) + 1)
     for i in range(digits):
         counting_sort(T, base, lambda v: v // base**i % base)
+    return T
