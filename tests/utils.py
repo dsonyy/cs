@@ -1,22 +1,22 @@
-from typing import Callable
-from xmlrpc.client import Boolean
-from termcolor import colored, cprint
+from termcolor import cprint
 from typing import Callable, List, Any
 import time
+
 
 test_group = 0
 
 
-def test(fn: Callable[..., Boolean], inputs: List[List[Any]], outputs: List[Any]) -> bool:
+def test(fn: Callable[..., bool], inputs: List[List[Any]], outputs: List[Any], test_name: str) -> bool:
     global test_group
     test_group += 1
-    cprint(f"TEST GROUP {test_group}", color="cyan")
+    cprint(f"TEST GROUP {test_group} - {test_name}", color="cyan")
 
     if len(inputs) != len(outputs):
         cprint("Length of inputs and outputs are not the same.", color="red")
         return False
     n = len(inputs)
 
+    ok = True
     for i in range(n):
         cprint(f"TEST {test_group}.{i}", end="")
         start = time.time()
@@ -31,5 +31,5 @@ def test(fn: Callable[..., Boolean], inputs: List[List[Any]], outputs: List[Any]
             cprint(f"\tInput:  {inputs[i]}")
             cprint(f"\tOutput: {outputs[i]}")
             cprint(f"\tResult: {result}")
-            return False
-    return True
+            ok = False
+    return ok

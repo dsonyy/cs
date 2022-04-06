@@ -35,3 +35,4 @@ def heap_sort(T):
     for i in range(n-1, 0, -1):
         T[0], T[i] = T[i], T[0]
         heapify(T, i, 0)
+    return T
