@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import random
-import sys
+
 
 from asd.sorting.heap_sort import *
 from asd.sorting.insertion_sort import *
@@ -10,6 +10,8 @@ from asd.sorting.radix_sort import *
 from asd.sorting.bubble_sort import *
 from asd.sorting.selection_sort import *
 from utils import test
+
+random.seed(42)
 
 sorting_fn = (
     heap_sort,
