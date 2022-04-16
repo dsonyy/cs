@@ -24,7 +24,7 @@ def test(fn: Callable[..., bool],
     ok = True
     elapsed_all = 0
     for i in range(n):
-        input = deepcopy(inputs[0])
+        input = deepcopy(inputs[i])
         start = time.time()
         try:
             result = fn(*input)
@@ -38,9 +38,9 @@ def test(fn: Callable[..., bool],
 
         if result != outputs[i]:
             cprint(f"TEST {test_group}.{i} BAD RESULT", color="red")
-            # cprint(f"\tInput:  {inputs[i]}")
-            # cprint(f"\tOutput: {outputs[i]}")
-            # cprint(f"\tResult: {result}")
+            cprint(f"\tInput:  {inputs[i]}")
+            cprint(f"\tOutput: {outputs[i]}")
+            cprint(f"\tResult: {result}")
             ok = False
     if ok:
         cprint(f"   OK {elapsed_all:0.3f}s", "green")
