@@ -1,7 +1,5 @@
 from typing import List
 
-from numpy import piecewise
-
 DP: List[List[int]] = []
 Weights: List[int] = []
 Prices: List[int] = []
@@ -10,9 +8,10 @@ Prices: List[int] = []
 def _knapsack(i: int, cap: int) -> int:
     if i == 0:
         if Weights[0] <= cap:
-            return Prices[i]
+            DP[i][cap] = Prices[i]
         else:
-            return 0
+            DP[i][cap] = 0
+        return DP[i][cap]
     if DP[i][cap] is not None:
         return DP[i][cap]
 
@@ -25,6 +24,24 @@ def _knapsack(i: int, cap: int) -> int:
     return DP[i][cap]
 
 
+def get_items(n: int, cap: int) -> List[int]:
+    items = []
+    res = _knapsack(n - 1, cap)
+    for i in range(n - 1, 0, -1):
+        if res == DP[i - 1][cap] or res <= 0:
+            items.append(0)
+        else:
+            items.append(1)
+            res -= Prices[i]
+            cap -= Weights[i]
+    if res >= DP[0][cap] and res > 0:
+        items.append(1)
+    else:
+        items.append(0)
+
+    return items[::-1]
+
+
 def knapsack(weights: List[int], prices: List[int], max_cap: int) -> int:
     global DP
     global Weights
@@ -34,12 +51,29 @@ def knapsack(weights: List[int], prices: List[int], max_cap: int) -> int:
     Weights = weights
     Prices = prices
     DP = [[None for _ in range(max_cap + 1)] for _ in range(N)]
+
     return _knapsack(N - 1, max_cap)
 
 
+def knapsack_items(weights: List[int], prices: List[int], max_cap: int) -> List[int]:
+    val = knapsack(weights, prices, max_cap)
+    N = len(weights)
+    items = get_items(N, max_cap)
+    return val, items
+
+
+def print_dp() -> None:
+    for i in range(len(DP[0])):
+        for j in range(len(DP)):
+            if DP[j][i] is None:
+                print("xxxx ", end="")
+            else:
+                print("{:>4}".format(DP[j][i]), end=" ")
+        print()
+
+
 if __name__ == "__main__":
-    print(knapsack(
-        [23, 31, 29, 44, 53, 38, 63, 85, 89, 82],
-        [92, 57, 49, 68, 60, 43, 67, 84, 87, 72],
-        165,
-    ))
+    print(knapsack_items(
+        [4, 5, 6],
+        [1, 2, 3], 15
+    ),)
