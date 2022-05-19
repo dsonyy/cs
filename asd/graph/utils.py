@@ -1,3 +1,4 @@
+import time
 import cv2
 import numpy as np
 from io import BytesIO
@@ -64,7 +65,8 @@ def print_matrix(M: List[List[bool]]) -> None:
 def render_graph(L: List[List[int]],
                  T0: Union[List[bool], None] = None,
                  T1: Union[List[bool], None] = None,
-                 T2: Union[List[bool], None] = None) -> None:
+                 T2: Union[List[bool], None] = None,
+                 sleep_ms: int = 800) -> None:
     dot = graphviz.Graph()
 
     for v in range(len(L)):
@@ -84,12 +86,4 @@ def render_graph(L: List[List[int]],
 
     img: np.array = Image.open(BytesIO(dot.pipe("jpg")))
     cv2.imshow("Graph", np.array(img)[:, :, ::-1])
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-
-G = gen_graph(5, 6)
-T = [0, 1, 0, 0, 0]
-T0 = [0, 0, 1, 0, 0]
-T1 = [0, 0, 1, 1, 0]
-render_graph(G, T, T0, T1)
+    cv2.waitKey(sleep_ms)

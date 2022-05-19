@@ -1,7 +1,8 @@
+import utils
 from collections import deque
 
 
-def bfs(G, s):
+def bfs(G, s, fn=None):
     queue = deque([s])
     visited = [False for _ in range(len(G))]
     visited[s] = True
@@ -15,9 +16,16 @@ def bfs(G, s):
                 visited[u] = True
 
         print(v, ":", queue)
+        if fn is not None:
+            fn(v)
 
 
 if __name__ == "__main__":
-    G = [[2, 1, 8], [0], [0, 3, 4], [2, 5],
-         [2, 6, 7], [3], [4, 7], [6, 4], [0]]
-    bfs(G, 1)
+    G = utils.gen_graph(7, 30)
+    T = [False] * len(G)
+
+    def fn(v):
+        global G
+        T[v] = True
+        utils.render_graph(G, T)
+    bfs(G, 1, fn)

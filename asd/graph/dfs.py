@@ -1,4 +1,4 @@
-def dfs(G, s):
+def dfs(G, s, fn=None):
     stack = [s]
     visited = [False for _ in range(len(G))]
     visited[s] = True
@@ -12,6 +12,8 @@ def dfs(G, s):
                 visited[u] = True
 
         print(v, ":", stack)
+        if fn is not None:
+            fn(v)
 
 
 if __name__ == "__main__":
