@@ -8,7 +8,12 @@ import random
 import graphviz
 
 
-def gen_graph(v: int, e: int) -> List[List[int]]:
+def gen_graph(v: int = None, e: int = None) -> List[List[int]]:
+    if v is None:
+        v = random.randint(3, 15)
+    if e is None:
+        e = random.randint(0, v*(v-1)//2)
+
     G = [[] for _ in range(v)]
     E = set([])
 
